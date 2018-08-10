@@ -13,7 +13,12 @@ class App extends Component{
 	}
 
 	addReminder(){
-		console.log('app', this)
+		// console.log('app', this)
+		this.props.addReminder(this.state.text)
+	}
+
+	renderReminders(){
+		console.log(this.props)
 	}
 
 	render(){
@@ -28,6 +33,7 @@ class App extends Component{
 							onChange={event => this.setState({'text':event.target.value})}
 						/>
 					</div>
+					{this.renderReminders()}
 					<button
 						type="button" 
 						className="btn btn-info"
@@ -39,8 +45,22 @@ class App extends Component{
 	}
 }
 
+// dispatch function is what calls on the reducers
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({addReminder}, dispatch)
 }
 
+// map state
+function mapStateToProps(state){
+	return {
+		reminders : state
+	};
+}
+
 export default connect(null, mapDispatchToProps)(App);
+
+// can also be written like so: 
+// export default connect(null, { addReminder })(App);
+// since we are only binding 1 action creator
+
+
